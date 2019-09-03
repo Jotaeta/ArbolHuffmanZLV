@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Laboratorio_Arbol_Huffman_y_ZLV.Helpers;
 
 namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
 {
@@ -22,7 +24,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
 
             var sPath = fArchivo.FileName;
 
-
+            DataInstance.Instance.ClaseArchivo.Comprimir(sPath);
 
             return new RedirectResult("Index", false);
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Laboratorio_Arbol_Huffman_y_ZLV.Models;
 
 namespace Laboratorio_Arbol_Huffman_y_ZLV.Helpers
 {
@@ -17,5 +18,6 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Helpers
             }
         }
 
+        public Archivos ClaseArchivo = new Archivos();
     }
 }

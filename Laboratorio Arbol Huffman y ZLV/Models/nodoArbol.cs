@@ -7,7 +7,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
 {
     public class nodoArbol : IComparable
     {
-        public char Letra { get; set; }
+        public byte Letra { get; set; }
 
         public double Frecuencia { get; set; }
 
