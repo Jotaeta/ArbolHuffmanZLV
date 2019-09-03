@@ -13,6 +13,21 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
             return View();
         }
 
+        [HttpPost]
+        public RedirectResult SubirArchivo(HttpPostedFileBase fArchivo)
+        {
+            if (fArchivo == null) return new RedirectResult("Index", false);
+
+            //Direccion de archivo
+
+            var sPath = fArchivo.FileName;
+
+
+
+            return new RedirectResult("Index", false);
+        }
+
+        #region OTRAS FUNCIONES
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -26,5 +41,6 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
 
             return View();
         }
+        #endregion
     }
 }
