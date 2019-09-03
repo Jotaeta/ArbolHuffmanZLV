@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace ArbolHuffmanZLV
+namespace Laboratorio_Arbol_Huffman_y_ZLV
 {
     public class RouteConfig
     {

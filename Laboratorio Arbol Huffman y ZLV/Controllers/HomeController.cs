@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ArbolHuffmanZLV.Controllers
+namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
 {
     public class HomeController : Controller
     {

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace ArbolHuffmanZLV
+namespace Laboratorio_Arbol_Huffman_y_ZLV
 {
     public class MvcApplication : System.Web.HttpApplication
     {

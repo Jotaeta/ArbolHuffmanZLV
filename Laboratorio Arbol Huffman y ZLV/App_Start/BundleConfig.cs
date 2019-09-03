@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace ArbolHuffmanZLV
+namespace Laboratorio_Arbol_Huffman_y_ZLV
 {
     public class BundleConfig
     {
