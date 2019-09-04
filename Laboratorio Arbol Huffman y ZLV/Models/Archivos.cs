@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.IO;
+using Laboratorio_Arbol_Huffman_y_ZLV.Helpers;
 
 namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
 {
@@ -36,10 +37,24 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
                             }
                         }
                     }
+
+                    double totalLetras = 0;
+
                     foreach (var letra in TablaLetras)
                     {
-                        TablaLetras[letra.Key] = letra.Value / Convert.ToDouble(TablaLetras.Count);
+                        totalLetras += letra.Value;
                     }
+
+                    List<nodoArbol> ListaNodosArbol = new List<nodoArbol>();
+
+                    foreach (var letra in TablaLetras)
+                    {
+                        ListaNodosArbol.Add(new nodoArbol { Letra = letra.Key, Frecuencia = letra.Value / totalLetras});
+                    }
+
+                    ListaNodosArbol.Sort();
+
+                    DataInstance.Instance.ClaseArbol.Insertar(ListaNodosArbol);
                 }
             }
         }

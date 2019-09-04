@@ -11,6 +11,11 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
 
         public double Frecuencia { get; set; }
 
+        public nodoArbol nodoIzquierdo { get; set; }
+
+        public nodoArbol nodoDerecho { get; set; }
+
+        //Auxiliar para sort
         public int CompareTo(object obj)
         {
             var comparador = (nodoArbol)obj;

@@ -125,6 +125,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DataInstance.cs" />
+    <Compile Include="Models\ArbolHuffman.cs" />
     <Compile Include="Models\Archivos.cs" />
     <Compile Include="Models\nodoArbol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
