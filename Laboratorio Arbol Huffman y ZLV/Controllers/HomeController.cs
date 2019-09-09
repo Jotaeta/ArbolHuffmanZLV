@@ -24,6 +24,8 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
 
             var sPath = fArchivo.FileName;
 
+            DataInstance.Instance.sPath = Server.MapPath("~/ArchivosComprimidos");
+
             DataInstance.Instance.ClaseArchivo.Comprimir(sPath);
 
             return new RedirectResult("Index", false);

@@ -13,6 +13,8 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
         {
             Dictionary<byte, double> TablaLetras = new Dictionary<byte, double>();
 
+            List<nodoArbol> ListaNodosArbol = new List<nodoArbol>();
+
             using (var stream = new FileStream(sPath, FileMode.Open))
             {
                 using (var reader = new BinaryReader(stream))
@@ -45,8 +47,6 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
                         totalLetras += letra.Value;
                     }
 
-                    List<nodoArbol> ListaNodosArbol = new List<nodoArbol>();
-
                     foreach (var letra in TablaLetras)
                     {
                         ListaNodosArbol.Add(new nodoArbol { Letra = letra.Key, Frecuencia = letra.Value / totalLetras});
@@ -54,9 +54,11 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
 
                     ListaNodosArbol.Sort();
 
-                    DataInstance.Instance.ClaseArbol.Insertar(ListaNodosArbol);
+                    
                 }
             }
+
+            DataInstance.Instance.ClaseArbol.Insertar(ListaNodosArbol, Path.GetFileNameWithoutExtension(sPath), sPath);
         }
     }
 }

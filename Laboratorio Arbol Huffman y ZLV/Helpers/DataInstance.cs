@@ -18,6 +18,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Helpers
             }
         }
 
+        public string sPath;
         public Archivos ClaseArchivo = new Archivos();
         public ArbolHuffman ClaseArbol = new ArbolHuffman();
     }
