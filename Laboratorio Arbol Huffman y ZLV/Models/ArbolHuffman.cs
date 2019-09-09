@@ -15,7 +15,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
         {
             while(ListaNodo.Count != 1)
             {
-                nodoArbol nodoAux = new nodoArbol();
+                var nodoAux = new nodoArbol();
 
                 nodoAux.Frecuencia = ListaNodo[0].Frecuencia + ListaNodo[1].Frecuencia;
 
@@ -27,8 +27,8 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
                 ListaNodo.Sort();
             }
 
-            Dictionary<byte, string> DiccionarioPrefijos = new Dictionary<byte, string>();
-            string camino = "";
+            var DiccionarioPrefijos = new Dictionary<byte, string>();
+            var camino = "";
 
             Recorrido( ref DiccionarioPrefijos, ListaNodo[0], camino);
 
@@ -54,7 +54,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
         ///
         public void ComprimirArchivo(Dictionary<byte, string> DiccionarioClave, string nombre, string ArchivoActual)
         {
-            string Path = $"{DataInstance.Instance.sPath}\\{nombre}.huff";
+            var Path = $"{DataInstance.Instance.sPath}\\{nombre}.huff";
 
             using (var streamReader = new FileStream(ArchivoActual, FileMode.Open))
             {
@@ -83,10 +83,12 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
                             writer.Seek(PosicionInicial, SeekOrigin.Begin);
                             writer.Write(Encoding.ASCII.GetBytes("fi"));
                             PosicionInicial += 8;
+                            writer.Seek(PosicionInicial, SeekOrigin.Begin);
+                            writer.Write(Encoding.ASCII.GetBytes("fi"));
+                            PosicionInicial += 8;
                             const int bufferLength = 100;
 
                             var byteBuffer = new byte[bufferLength];
-                            bool prueba = (reader.BaseStream.Position != reader.BaseStream.Length);
                             while (reader.BaseStream.Position != reader.BaseStream.Length)
                             {
                                 byteBuffer = reader.ReadBytes(bufferLength);
@@ -97,8 +99,8 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
                                     {
                                         if (letra == item.Key)
                                         {
-                                            writer.Write(Convert.ToInt32(item.Value, 2).ToString());
                                             writer.Seek(PosicionInicial, SeekOrigin.Begin);
+                                            writer.Write(Convert.ToInt32(item.Value, 2).ToString());
                                             PosicionInicial += 8;
                                         }
                                     }

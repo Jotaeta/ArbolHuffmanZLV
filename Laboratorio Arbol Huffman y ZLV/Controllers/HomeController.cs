@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Laboratorio_Arbol_Huffman_y_ZLV.Helpers;
+using Laboratorio_Arbol_Huffman_y_ZLV.Models;
 
 namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
 {
@@ -12,8 +13,19 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            DataInstance.Instance.sPath = Server.MapPath("~/Archivos");
+            var directoryInfo = new DirectoryInfo(DataInstance.Instance.sPath);
+            var files = directoryInfo.GetFiles("*.*");
+            var listaArchivo = new List<Historial>();
+
+            foreach (var item in files)
+            {
+                listaArchivo.Add( new Historial { sNombreArchivo = item.Name });
+            }
+
+            return View(listaArchivo);
         }
+
 
         [HttpPost]
         public RedirectResult SubirArchivo(HttpPostedFileBase fArchivo)
@@ -21,12 +33,17 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
             if (fArchivo == null) return new RedirectResult("Index", false);
 
             //Direccion de archivo
-
             var sPath = fArchivo.FileName;
-
-            DataInstance.Instance.sPath = Server.MapPath("~/ArchivosComprimidos");
-
-            DataInstance.Instance.ClaseArchivo.Comprimir(sPath);
+            /////
+            //Decide si el archivo se debe de comprimir o descomprimir
+            if (Path.GetExtension(fArchivo.FileName) == ".huff")
+            {
+                DataInstance.Instance.ClaseArchivo.Descomprimir(sPath);
+            }
+            else
+            {
+                DataInstance.Instance.ClaseArchivo.Comprimir(sPath);
+            }
 
             return new RedirectResult("Index", false);
         }

@@ -4,16 +4,53 @@ using System.Linq;
 using System.Web;
 using System.IO;
 using Laboratorio_Arbol_Huffman_y_ZLV.Helpers;
+using System.Text;
 
 namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
 {
     public class Archivos
     {
+        public void Descomprimir(string sPath)
+        {
+            var TablaPrefijos = new Dictionary<byte, decimal>();
+            using (var stream = new FileStream(sPath, FileMode.Open))
+            {
+                using (var reader = new BinaryReader(stream))
+                {
+                    const int bufferLength = 17;
+                    var byteBuffer = new byte[bufferLength];
+                    byteBuffer = reader.ReadBytes(bufferLength);
+
+                    bool DiccionarioTerminado = false;
+                    
+                    while (!DiccionarioTerminado)
+                    {
+                        var lineValor = new byte();
+                        var lineCamino = new byte();
+                        Decimal Dec = 0;
+
+                            lineValor += byteBuffer[0];
+                            lineCamino += byteBuffer[9];
+                            Dec = lineCamino;
+                        if (byteBuffer[0] == Encoding.ASCII.GetBytes("fi")[0])
+                        {
+                            DiccionarioTerminado = true;
+                        }
+                        else
+                        {
+                            TablaPrefijos.Add(lineValor, Dec);
+                        }
+                    }                    
+                }
+            }
+
+        }
+
         public void Comprimir(string sPath)
         {
-            Dictionary<byte, double> TablaLetras = new Dictionary<byte, double>();
+            var TablaLetras = new Dictionary<byte, double>();
 
-            List<nodoArbol> ListaNodosArbol = new List<nodoArbol>();
+            var ListaNodosArbol = new List<nodoArbol>();
 
             using (var stream = new FileStream(sPath, FileMode.Open))
             {

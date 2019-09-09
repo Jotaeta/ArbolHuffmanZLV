@@ -2,8 +2,26 @@
     ViewBag.Title = "LAB1";
 }
 
+@model IEnumerable<Laboratorio_Arbol_Huffman_y_ZLV.Models.Historial>
+
+<table class="table">
+    <tr>
+        <th>
+            Archivos
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.sNombreArchivo)
+            </td>
+        </tr>
+    }
+</table>
+
 @using (Html.BeginForm("SubirArchivo", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <input type="file" name="fArchivo"/>
+    <input type="file" name="fArchivo" />
     <button type="submit"> Subir Archivo </button>
 }
