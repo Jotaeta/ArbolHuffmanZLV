@@ -11,7 +11,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
 {
     public class ArbolHuffman
     {
-        public void Insertar(List<nodoArbol> ListaNodo, string nombre, string ArchivoActual)
+        public void Insertar(List<nodoArbol> ListaNodo, string nombre, string ArchivoActual, string extension)
         {
             while(ListaNodo.Count != 1)
             {
@@ -32,7 +32,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
 
             Recorrido( ref DiccionarioPrefijos, ListaNodo[0], camino);
 
-            ComprimirArchivo(DiccionarioPrefijos, nombre, ArchivoActual);
+            ComprimirArchivo(DiccionarioPrefijos, nombre, ArchivoActual, extension);
         }
         ////      
         public void Recorrido(ref Dictionary<byte, string> DiccionarioPre, nodoArbol Raiz, string camino)
@@ -52,7 +52,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
         }
         ////
         ///
-        public void ComprimirArchivo(Dictionary<byte, string> DiccionarioClave, string nombre, string ArchivoActual)
+        public void ComprimirArchivo(Dictionary<byte, string> DiccionarioClave, string nombre, string ArchivoActual, string Extension)
         {
             var Path = $"{DataInstance.Instance.sPath}\\{nombre}.huff";
 
@@ -64,49 +64,59 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
                     {
                         using (var writer = new BinaryWriter(streamWriter))
                         {
-                            var PosicionInicial = 0;
+                            writer.Write(Encoding.UTF8.GetBytes(Extension.PadLeft(8, '0').ToCharArray()));
+                            writer.Write(Encoding.UTF8.GetBytes(Convert.ToString(DiccionarioClave.Count).PadLeft(8, '0').ToCharArray()));
+
                             foreach (var item in DiccionarioClave)
                             {
-                                //var binLetra = string.Format("{0, 8}", Convert.ToString(Convert.ToInt32(item.Key), 2));
-                                //var binCamino = string.Format("{0, 8}", Convert.ToString(Convert.ToInt32(item.Value), 2));
-
-                                //var key = Encoding.UTF8.GetBytes(item.Key.ToString("00000000; -00000000"));
-                                //var value = Encoding.UTF8.GetBytes(string.Format("{0, 8}", item.Value));
-
-                                streamWriter.Seek(PosicionInicial, SeekOrigin.Begin);
-                                PosicionInicial += 8;
                                 writer.Write(item.Key);
-                                streamWriter.Seek(PosicionInicial, SeekOrigin.Begin);
-                                PosicionInicial += 9;
-                                writer.Write(Convert.ToInt32(item.Value, 2).ToString());
+
+                                //var prueba = Convert.ToInt32(item.Value.PadLeft(8, '0'), 2);
+
+                                //var prueba1 = (byte)prueba;
+
+                                //(byte)Convert.ToInt32(item.Value, 2)
+                                var aux = $"{item.Value}|";
+
+                                writer.Write(aux.ToCharArray());
                             }
-                            writer.Seek(PosicionInicial, SeekOrigin.Begin);
-                            writer.Write(Encoding.ASCII.GetBytes("fi"));
-                            PosicionInicial += 8;
-                            writer.Seek(PosicionInicial, SeekOrigin.Begin);
-                            writer.Write(Encoding.ASCII.GetBytes("fi"));
-                            PosicionInicial += 8;
-                            const int bufferLength = 100;
+
+
+                            const int bufferLength = 10;
 
                             var byteBuffer = new byte[bufferLength];
+                            var CadenaAux = "";
+                            
                             while (reader.BaseStream.Position != reader.BaseStream.Length)
                             {
                                 byteBuffer = reader.ReadBytes(bufferLength);
 
-                                foreach (var letra in byteBuffer)
+                                foreach (var LetraRecibida in byteBuffer)
                                 {
-                                    foreach (var item in DiccionarioClave)
+                                    foreach (var Clave in DiccionarioClave)
                                     {
-                                        if (letra == item.Key)
+                                        if (LetraRecibida == Clave.Key)
                                         {
-                                            writer.Seek(PosicionInicial, SeekOrigin.Begin);
-                                            writer.Write(Convert.ToInt32(item.Value, 2).ToString());
-                                            PosicionInicial += 8;
+                                            CadenaAux += Clave.Value;
+                                            if (CadenaAux.Length / 8 != 0)
+                                            {
+                                                for (int i = 0; i < CadenaAux.Length / 8; i++)
+                                                {
+                                                    var NuevaCadena = CadenaAux.Substring(0, 8);
+                                                    writer.Write((byte)Convert.ToInt32(NuevaCadena, 2));
+                                                    CadenaAux = CadenaAux.Substring(8);
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
 
+                            if (CadenaAux.Length <= 8)
+                            {
+                                writer.Write((byte)Convert.ToInt32(CadenaAux.PadRight(8, '0'), 2));
+                            }
+                            
                         }
                     }
                 }

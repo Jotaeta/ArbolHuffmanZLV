@@ -9,14 +9,33 @@
         <th>
             Archivos
         </th>
+        <th>
+            Razon de Compresion
+        </th>
+        <th>
+            Factor Compresion
+        </th>
+        <th>
+            Porcentaje de reduccion
+        </th>
     </tr>
+
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.sNombreArchivo)
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.ActionLink(item.NombreArchivo, "Descargar", new { filename = item.NombreArchivo })
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.RazonCompre)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.FactorCompre)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.PorcentajeRedu)
+        </td>
+    </tr>
     }
 </table>
 

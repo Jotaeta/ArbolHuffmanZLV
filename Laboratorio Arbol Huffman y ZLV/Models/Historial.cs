@@ -10,15 +10,15 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
     {
         //Variables a manejar  en el historial
         [Display(Name = "Nombre del archivo")]
-        public string sNombreArchivo { get; set; }
+        public string NombreArchivo { get; set; }
 
         [Display(Name = "Razon de compresion")]
-        public int iRazonCompre { get; set; }
+        public double RazonCompre { get; set; }
 
         [Display(Name = "Factor de compresion")]
-        public int iFactorCompre { get; set; }
+        public double FactorCompre { get; set; }
 
         [Display(Name = "Porcentaje de reduccion")]
-        public double dPorcentajeRedu { get; set; }
+        public double PorcentajeRedu { get; set; }
     }
 }
