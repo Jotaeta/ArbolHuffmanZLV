@@ -26,6 +26,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Helpers
         public ArbolHuffman ClaseArbol = new ArbolHuffman();
         public List<Historial> listaArchivo = new List<Historial>();
 
+        //Carga el historial que se muestra en pantalla por medio de una lista
         public void CargarLista()
         {
             using (var Reader = new StreamReader(Path.Combine(sPathManejo, "ManejoArchivos.txt")))
@@ -47,6 +48,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Helpers
             }
         }
 
+        //Maneja los documentos en el historial para mantener el mismo despues de cerrar la aplicacion
         public void ManejoArchivos(double bytesNuevo, double bytesActual, string nombre)
         {
 

@@ -11,6 +11,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
 {
     public class ArbolHuffman
     {
+        //Crea el arbol huffman para luego empezar la compresion
         public void Insertar(List<nodoArbol> ListaNodo, string nombre, string ArchivoActual, string extension)
         {
             while(ListaNodo.Count != 1)
@@ -34,7 +35,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
 
             ComprimirArchivo(DiccionarioPrefijos, nombre, ArchivoActual, extension);
         }
-        ////      
+        ////Recorre el arbol para obtener el camino
         public void Recorrido(ref Dictionary<byte, string> DiccionarioPre, nodoArbol Raiz, string camino)
         {
             if (Raiz != null)
@@ -51,7 +52,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
 
         }
         ////
-        ///
+        ///Realiza la logica para leer el archivo original y comprimir
         public void ComprimirArchivo(Dictionary<byte, string> DiccionarioClave, string nombre, string ArchivoActual, string Extension)
         {
             var Path = $"{DataInstance.Instance.sPath}\\{nombre}.huff";
@@ -70,18 +71,13 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
                             foreach (var item in DiccionarioClave)
                             {
                                 writer.Write(item.Key);
-
-                                //var prueba = Convert.ToInt32(item.Value.PadLeft(8, '0'), 2);
-
-                                //var prueba1 = (byte)prueba;
-
-                                //(byte)Convert.ToInt32(item.Value, 2)
+                                
                                 var aux = $"{item.Value}|";
 
                                 writer.Write(aux.ToCharArray());
                             }
 
-
+                            //Traduce las letras del doc original al codigo ASCII
                             const int bufferLength = 10;
 
                             var byteBuffer = new byte[bufferLength];

@@ -13,10 +13,13 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
     {
         public ActionResult Index()
         {
+            //Obtiene direccion de donde se almacenan los archivos y los datos de historial
             DataInstance.Instance.sPath = Server.MapPath("~/Archivos");
             DataInstance.Instance.sPathManejo = Server.MapPath("~/Historial");
             var directoryInfo = new DirectoryInfo(DataInstance.Instance.sPath);
             var files = directoryInfo.GetFiles("*.*");
+
+            //Carga la lista que muestra la vista de los archivos comprimidos y descomprimidos
             DataInstance.Instance.CargarLista();
 
             return View(DataInstance.Instance.listaArchivo);

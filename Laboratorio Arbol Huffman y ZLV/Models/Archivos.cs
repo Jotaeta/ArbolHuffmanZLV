@@ -10,6 +10,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
 {
     public class Archivos
     {
+        //Realiza la logica de descompresion
         public void Descomprimir(string sPath, string nombre)
         {
             var TablaPrefijos = new Dictionary<byte, string>();
@@ -143,6 +144,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
             return binario;
         }
 
+        //Lee el documento y crea la tabla de prefijos
         public void Comprimir(string sPath)
         {
             var TablaLetras = new Dictionary<byte, double>();
