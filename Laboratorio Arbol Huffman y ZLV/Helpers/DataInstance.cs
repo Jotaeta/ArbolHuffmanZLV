@@ -24,6 +24,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Helpers
         public string Ext;
         public Archivos ClaseArchivo = new Archivos();
         public ArbolHuffman ClaseArbol = new ArbolHuffman();
+        public LZW ClaseLZW = new LZW();
         public List<Historial> listaArchivo = new List<Historial>();
 
         //Carga el historial que se muestra en pantalla por medio de una lista

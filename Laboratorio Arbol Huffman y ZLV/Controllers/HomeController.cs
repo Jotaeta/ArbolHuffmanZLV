@@ -66,19 +66,19 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
             //Decide si el archivo se debe de comprimir o descomprimir
             if (Path.GetExtension(fArchivo.FileName) == ".lzw")
             {
-                DataInstance.Instance.ClaseArchivo.Descomprimir(sPath, Path.GetFileNameWithoutExtension(sPath));
+                DataInstance.Instance.ClaseLZW.Descomprimir(sPath, Path.GetFileNameWithoutExtension(sPath));
                 var NameCompre = Path.GetFileNameWithoutExtension(sPath);
                 var fileActual = new FileInfo($"{DataInstance.Instance.sPath}\\{NameCompre}{DataInstance.Instance.Ext}");
                 var fileDescompre = new FileInfo(sPath);
-                DataInstance.Instance.ManejoArchivos((double)fileDescompre.Length, (double)fileActual.Length, $"{NameCompre}{DataInstance.Instance.Ext}");
+                DataInstance.Instance.ManejoArchivos((double)fileDescompre.Length, (double)fileActual.Length, $"{NameCompre}.txt");
             }
             else
             {
-                DataInstance.Instance.ClaseArchivo.Comprimir(sPath);
+                DataInstance.Instance.ClaseLZW.Comprimir(sPath, Path.GetFileNameWithoutExtension(sPath));
                 var NameCompre = Path.GetFileNameWithoutExtension(sPath);
-                var fileComprimido = new FileInfo($"{DataInstance.Instance.sPath}\\{NameCompre}.huff");
+                var fileComprimido = new FileInfo($"{DataInstance.Instance.sPath}\\{NameCompre}.lzw");
                 var fileActual = new FileInfo(sPath);
-                DataInstance.Instance.ManejoArchivos((double)fileComprimido.Length, (double)fileActual.Length, $"{NameCompre}.huff");
+                DataInstance.Instance.ManejoArchivos((double)fileComprimido.Length, (double)fileActual.Length, $"{NameCompre}.lzw");
             }
             DataInstance.Instance.listaArchivo.Clear();
             return new RedirectResult("Index", false);
