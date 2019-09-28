@@ -22,25 +22,30 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.ActionLink(item.NombreArchivo, "Descargar", new { filename = item.NombreArchivo })
-        </td>
-        <td>
-            @Html.DisplayFor(model => item.RazonCompre)
-        </td>
-        <td>
-            @Html.DisplayFor(model => item.FactorCompre)
-        </td>
-        <td>
-            @Html.DisplayFor(model => item.PorcentajeRedu)
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @Html.ActionLink(item.NombreArchivo, "Descargar", new { filename = item.NombreArchivo })
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.RazonCompre)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FactorCompre)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.PorcentajeRedu)
+            </td>
+        </tr>
     }
 </table>
 
 @using (Html.BeginForm("SubirArchivo", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <input type="file" name="fArchivo" />
-    <button type="submit"> Subir Archivo </button>
+    <button type="submit"> SUBIR ARCHIVO HUFFMAN </button>
+}
+@using (Html.BeginForm("SubirArchivoLZW", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="fArchivo" />
+    <button type="submit"> SUBIR ARCHIVO LZW </button>
 }

@@ -55,6 +55,35 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
             return new RedirectResult("Index", false);
         }
 
+        [HttpPost]
+        public RedirectResult SubirArchivoLZW(HttpPostedFileBase fArchivo)
+        {
+            if (fArchivo == null) return new RedirectResult("Index", false);
+
+            //Direccion de archivo
+            var sPath = fArchivo.FileName;
+            /////
+            //Decide si el archivo se debe de comprimir o descomprimir
+            if (Path.GetExtension(fArchivo.FileName) == ".lzw")
+            {
+                DataInstance.Instance.ClaseArchivo.Descomprimir(sPath, Path.GetFileNameWithoutExtension(sPath));
+                var NameCompre = Path.GetFileNameWithoutExtension(sPath);
+                var fileActual = new FileInfo($"{DataInstance.Instance.sPath}\\{NameCompre}{DataInstance.Instance.Ext}");
+                var fileDescompre = new FileInfo(sPath);
+                DataInstance.Instance.ManejoArchivos((double)fileDescompre.Length, (double)fileActual.Length, $"{NameCompre}{DataInstance.Instance.Ext}");
+            }
+            else
+            {
+                DataInstance.Instance.ClaseArchivo.Comprimir(sPath);
+                var NameCompre = Path.GetFileNameWithoutExtension(sPath);
+                var fileComprimido = new FileInfo($"{DataInstance.Instance.sPath}\\{NameCompre}.huff");
+                var fileActual = new FileInfo(sPath);
+                DataInstance.Instance.ManejoArchivos((double)fileComprimido.Length, (double)fileActual.Length, $"{NameCompre}.huff");
+            }
+            DataInstance.Instance.listaArchivo.Clear();
+            return new RedirectResult("Index", false);
+        }
+
         public ActionResult Descargar (string filename)
         {
             var fullpath = Path.Combine(DataInstance.Instance.sPath, filename);
