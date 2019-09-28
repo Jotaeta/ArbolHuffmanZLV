@@ -63,7 +63,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Helpers
                     Writer.WriteLine(item.RazonCompre);
                     Writer.WriteLine(item.FactorCompre);
                     Writer.WriteLine(item.PorcentajeRedu);
-                    Writer.Write(item.TipoArchivo);
+                    Writer.WriteLine(item.TipoArchivo);
                 }
                 Writer.WriteLine(nombre);
                 Writer.WriteLine(bytesNuevo / bytesActual);

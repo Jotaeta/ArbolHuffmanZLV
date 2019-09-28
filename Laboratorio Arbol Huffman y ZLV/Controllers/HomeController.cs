@@ -13,6 +13,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
     {
         public ActionResult Index()
         {
+            DataInstance.Instance.listaArchivo.Clear();
             //Obtiene direccion de donde se almacenan los archivos y los datos de historial
             DataInstance.Instance.sPath = Server.MapPath("~/Archivos");
             DataInstance.Instance.sPathManejo = Server.MapPath("~/Historial");
@@ -51,7 +52,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
                 var fileActual = new FileInfo(sPath);
                 DataInstance.Instance.ManejoArchivos((double)fileComprimido.Length, (double)fileActual.Length, $"{NameCompre}.huff", "HUFFMAN");
             }
-            DataInstance.Instance.listaArchivo.Clear();
+            
             return new RedirectResult("Index", false);
         }
 
@@ -80,7 +81,6 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
                 var fileActual = new FileInfo(sPath);
                 DataInstance.Instance.ManejoArchivos((double)fileComprimido.Length, (double)fileActual.Length, $"{NameCompre}.lzw", "LZW");
             }
-            DataInstance.Instance.listaArchivo.Clear();
             return new RedirectResult("Index", false);
         }
 
