@@ -69,7 +69,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
             {
                 DataInstance.Instance.ClaseLZW.Descomprimir(sPath, Path.GetFileNameWithoutExtension(sPath));
                 var NameCompre = Path.GetFileNameWithoutExtension(sPath);
-                var fileActual = new FileInfo($"{DataInstance.Instance.sPath}\\{NameCompre}{DataInstance.Instance.Ext}");
+                var fileActual = new FileInfo($"{DataInstance.Instance.sPath}\\{NameCompre}.txt");
                 var fileDescompre = new FileInfo(sPath);
                 DataInstance.Instance.ManejoArchivos((double)fileDescompre.Length, (double)fileActual.Length, $"{NameCompre}.txt","LZW");
             }

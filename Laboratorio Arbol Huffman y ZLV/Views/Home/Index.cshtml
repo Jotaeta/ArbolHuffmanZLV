@@ -48,10 +48,12 @@
 @using (Html.BeginForm("SubirArchivo", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <input type="file" name="fArchivo" />
-    <button type="submit"> SUBIR ARCHIVO HUFFMAN </button>
+    <button type="submit"> PROCESO ARCHIVO HUFFMAN </button>
 }
+<br />
+<br />
 @using (Html.BeginForm("SubirArchivoLZW", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <input type="file" name="fArchivo" />
-    <button type="submit"> SUBIR ARCHIVO LZW </button>
+    <button type="submit"> PROCESO ARCHIVO LZW </button>
 }

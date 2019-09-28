@@ -63,7 +63,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
 
                                 for (int i = 0; i < bytebuffer.Count(); i++)
                                 {
-                                    stringLetra += Convert.ToString(Convert.ToChar(bytebuffer[i]));
+                                    stringLetra += Convert.ToChar(bytebuffer[i]);
 
                                     if (!DiccionarioLetras.ContainsKey(stringLetra))
                                     {
@@ -84,9 +84,12 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
                                         anterior = stringLetra;
                                     }
                                 }
+                                if (stringLetra != "")
+                                {
+                                    ListaCaracteres.Add(DiccionarioLetras[anterior]);
+                                }
                             }
 
-                            ListaCaracteres.Add(DiccionarioLetras[stringLetra]);
 
                             if (MayorBits.Length < DiccionarioLetras[stringLetra].Length)
                             {
@@ -114,7 +117,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
                 }
             }
         }
-
+        
         public void Descomprimir(string sPath, string nombre)
         {
             using (var streamReader = new FileStream(sPath, FileMode.Open))
@@ -157,10 +160,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
                                     var auxConca = string.Empty;
                                     for (int j = 0; j < cantidadBits; j++)
                                     {
-                                        if (bytebufferSegundaParte[i + j].ToString() != "0")
-                                        {
-                                            auxConca += Convert.ToString(Convert.ToInt32(bytebufferSegundaParte[i + j].ToString()), 2).PadLeft(8, '0');
-                                        }
+                                        auxConca += Convert.ToString(Convert.ToInt32(bytebufferSegundaParte[i + j].ToString()), 2).PadLeft(8, '0');
                                     }
                                     nuevo = Convert.ToInt32(auxConca, 2);
                                     var aux = string.Empty;
@@ -186,15 +186,12 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
                                         {
                                             DiccionarioLetras.Add(DiccionarioLetras.Count() + 1, auxActual);
                                             writer.Write(auxPrevio.ToArray());
-                                           
-                                            auxPrevio = string.Empty;
-                                            auxPrevio += auxActual.Last();
-                                            auxActual = auxPrevio;
+                                            auxActual = string.Empty;
+                                            auxActual += item;
                                         }
-                                        else
-                                        {
-                                            auxPrevio = auxActual;
-                                        }
+
+                                        auxPrevio = auxActual;
+
                                     }
 
                                 }
