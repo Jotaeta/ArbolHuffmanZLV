@@ -41,7 +41,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
                 var NameCompre = Path.GetFileNameWithoutExtension(sPath);
                 var fileActual = new FileInfo($"{DataInstance.Instance.sPath}\\{NameCompre}{DataInstance.Instance.Ext}");
                 var fileDescompre = new FileInfo(sPath);
-                DataInstance.Instance.ManejoArchivos((double)fileDescompre.Length, (double)fileActual.Length, $"{NameCompre}{DataInstance.Instance.Ext}");
+                DataInstance.Instance.ManejoArchivos((double)fileDescompre.Length, (double)fileActual.Length, $"{NameCompre}{DataInstance.Instance.Ext}", "HUFFMAN");
             }
             else
             {
@@ -49,7 +49,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
                 var NameCompre = Path.GetFileNameWithoutExtension(sPath);
                 var fileComprimido = new FileInfo($"{DataInstance.Instance.sPath}\\{NameCompre}.huff");
                 var fileActual = new FileInfo(sPath);
-                DataInstance.Instance.ManejoArchivos((double)fileComprimido.Length, (double)fileActual.Length, $"{NameCompre}.huff");
+                DataInstance.Instance.ManejoArchivos((double)fileComprimido.Length, (double)fileActual.Length, $"{NameCompre}.huff", "HUFFMAN");
             }
             DataInstance.Instance.listaArchivo.Clear();
             return new RedirectResult("Index", false);
@@ -70,7 +70,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
                 var NameCompre = Path.GetFileNameWithoutExtension(sPath);
                 var fileActual = new FileInfo($"{DataInstance.Instance.sPath}\\{NameCompre}{DataInstance.Instance.Ext}");
                 var fileDescompre = new FileInfo(sPath);
-                DataInstance.Instance.ManejoArchivos((double)fileDescompre.Length, (double)fileActual.Length, $"{NameCompre}.txt");
+                DataInstance.Instance.ManejoArchivos((double)fileDescompre.Length, (double)fileActual.Length, $"{NameCompre}.txt","LZW");
             }
             else
             {
@@ -78,7 +78,7 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Controllers
                 var NameCompre = Path.GetFileNameWithoutExtension(sPath);
                 var fileComprimido = new FileInfo($"{DataInstance.Instance.sPath}\\{NameCompre}.lzw");
                 var fileActual = new FileInfo(sPath);
-                DataInstance.Instance.ManejoArchivos((double)fileComprimido.Length, (double)fileActual.Length, $"{NameCompre}.lzw");
+                DataInstance.Instance.ManejoArchivos((double)fileComprimido.Length, (double)fileActual.Length, $"{NameCompre}.lzw", "LZW");
             }
             DataInstance.Instance.listaArchivo.Clear();
             return new RedirectResult("Index", false);

@@ -44,13 +44,15 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Helpers
                     historialtemp.FactorCompre = Convert.ToDouble(Linea);
                     Linea = Reader.ReadLine();
                     historialtemp.PorcentajeRedu = Convert.ToDouble(Linea);
+                    Linea = Reader.ReadLine();
+                    historialtemp.TipoArchivo = Convert.ToString(Linea);
                     listaArchivo.Add(historialtemp);
                 }
             }
         }
 
         //Maneja los documentos en el historial para mantener el mismo despues de cerrar la aplicacion
-        public void ManejoArchivos(double bytesNuevo, double bytesActual, string nombre)
+        public void ManejoArchivos(double bytesNuevo, double bytesActual, string nombre, string tipo)
         {
 
             using (var Writer = new StreamWriter(Path.Combine(sPathManejo, "ManejoArchivos.txt")))
@@ -61,11 +63,13 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Helpers
                     Writer.WriteLine(item.RazonCompre);
                     Writer.WriteLine(item.FactorCompre);
                     Writer.WriteLine(item.PorcentajeRedu);
+                    Writer.Write(item.TipoArchivo);
                 }
                 Writer.WriteLine(nombre);
                 Writer.WriteLine(bytesNuevo / bytesActual);
                 Writer.WriteLine(bytesActual / bytesNuevo);
                 Writer.WriteLine((1 - bytesNuevo / bytesActual));
+                Writer.WriteLine(tipo);
             }
 
         }

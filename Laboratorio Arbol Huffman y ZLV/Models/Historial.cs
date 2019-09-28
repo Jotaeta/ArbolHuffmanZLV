@@ -20,5 +20,8 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
 
         [Display(Name = "Porcentaje de reduccion")]
         public double PorcentajeRedu { get; set; }
+
+        [Display(Name = "Tipo de compresion/desompresion")]
+        public string TipoArchivo { get; set; }
     }
 }
