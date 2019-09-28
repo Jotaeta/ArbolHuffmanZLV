@@ -9,13 +9,13 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
 {
     public class LZW
     {
-        public void Descomprimir(string sPath, string nombre)
+        public void Comprimir(string sPath, string nombre)
         {
             using (var streamReader = new FileStream(sPath, FileMode.Open))
             {
                 using (var reader = new BinaryReader(streamReader))
                 {
-                    using (var streamWriter = new FileStream($"{DataInstance.Instance.sPath}\\{nombre}.txt", FileMode.OpenOrCreate))
+                    using (var streamWriter = new FileStream($"{DataInstance.Instance.sPath}\\{nombre}.lzw", FileMode.OpenOrCreate))
                     {
                         using (var writer = new BinaryWriter(streamWriter))
                         {
@@ -109,6 +109,97 @@ namespace Laboratorio_Arbol_Huffman_y_ZLV.Models
                                 }
                             }
 
+                        }
+                    }
+                }
+            }
+        }
+
+        public void Descomprimir(string sPath, string nombre)
+        {
+            using (var streamReader = new FileStream(sPath, FileMode.Open))
+            {
+                using (var reader = new BinaryReader(streamReader))
+                {
+                    using (var streamWriter = new FileStream($"{DataInstance.Instance.sPath}\\{nombre}.txt", FileMode.OpenOrCreate))
+                    {
+                        using (var writer = new BinaryWriter(streamWriter))
+                        {
+                            var DiccionarioLetras = new Dictionary<int, string>();
+                            var bufferLength = 10000;
+                            var bytebuffer = new byte[bufferLength];
+
+                            bytebuffer = reader.ReadBytes(1);
+                            var CantidadDiccionario = Convert.ToInt32(bytebuffer[0]) + 1;
+
+                            for (int i = 0; i < CantidadDiccionario; i++)
+                            {
+                                bytebuffer = reader.ReadBytes(1);
+                                var Letra = Convert.ToChar(bytebuffer[0]).ToString();
+                                DiccionarioLetras.Add(DiccionarioLetras.Count() + 1, Letra);
+                            }
+
+                            bytebuffer = reader.ReadBytes(1);
+                            var cantidadBits = Convert.ToInt32(bytebuffer[0]);
+
+                            var bytebufferSegundaParte = new byte[cantidadBits * 10000];
+
+                            var nuevo = 0;
+                            var auxActual = string.Empty;
+                            var auxPrevio = string.Empty;
+
+                            while (reader.BaseStream.Position != reader.BaseStream.Length)
+                            {
+                                bytebufferSegundaParte = reader.ReadBytes(cantidadBits * 10000);
+
+                                for (int i = 0; i < bytebufferSegundaParte.Count(); i += cantidadBits)
+                                {
+                                    var auxConca = string.Empty;
+                                    for (int j = 0; j < cantidadBits; j++)
+                                    {
+                                        if (bytebufferSegundaParte[i + j].ToString() != "0")
+                                        {
+                                            auxConca += Convert.ToString(Convert.ToInt32(bytebufferSegundaParte[i + j].ToString()), 2).PadLeft(8, '0');
+                                        }
+                                    }
+                                    nuevo = Convert.ToInt32(auxConca, 2);
+                                    var aux = string.Empty;
+
+                                    if (nuevo > DiccionarioLetras.Count())
+                                    {
+                                        nuevo = DiccionarioLetras.Count();
+
+                                        aux = DiccionarioLetras[nuevo];
+
+                                        aux = aux.Substring(0, 1);
+                                    }
+                                    else
+                                    {
+                                        aux = DiccionarioLetras[nuevo];
+                                    }
+
+                                    foreach (var item in aux)
+                                    {
+                                        auxActual += item;
+
+                                        if (!DiccionarioLetras.ContainsValue(auxActual))
+                                        {
+                                            DiccionarioLetras.Add(DiccionarioLetras.Count() + 1, auxActual);
+                                            writer.Write(auxPrevio.ToArray());
+                                           
+                                            auxPrevio = string.Empty;
+                                            auxPrevio += auxActual.Last();
+                                            auxActual = auxPrevio;
+                                        }
+                                        else
+                                        {
+                                            auxPrevio = auxActual;
+                                        }
+                                    }
+
+                                }
+                            }
+                            writer.Write(auxPrevio.ToArray());
                         }
                     }
                 }
